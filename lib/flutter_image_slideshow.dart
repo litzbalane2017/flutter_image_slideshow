@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_slideshow/indicator.dart';
 
 class ImageSlideshow extends StatefulWidget {
   const ImageSlideshow({
@@ -11,8 +10,6 @@ class ImageSlideshow extends StatefulWidget {
     this.width = double.infinity,
     this.height = 200,
     this.initialPage = 0,
-    this.indicatorColor,
-    this.indicatorBackgroundColor = Colors.grey,
     this.onPageChanged,
     this.autoPlayInterval,
     this.isLoop = false,
@@ -31,12 +28,6 @@ class ImageSlideshow extends StatefulWidget {
 
   /// The page to show when first creating the [ImageSlideshow].
   final int initialPage;
-
-  /// The color to paint the indicator.
-  final Color? indicatorColor;
-
-  /// The color to paint behind th indicator.
-  final Color? indicatorBackgroundColor;
 
   /// Called whenever the page in the center of the viewport changes.
   final ValueChanged<int>? onPageChanged;
@@ -132,22 +123,6 @@ class _ImageSlideshowState extends State<ImageSlideshow> {
               final correctIndex = index % widget.children.length;
               return widget.children[correctIndex];
             },
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 10,
-            child: ValueListenableBuilder<int>(
-              valueListenable: _currentPageNotifier,
-              builder: (context, value, child) {
-                return Indicator(
-                  count: widget.children.length,
-                  currentIndex: value % widget.children.length,
-                  activeColor: widget.indicatorColor,
-                  backgroundColor: widget.indicatorBackgroundColor,
-                );
-              },
-            ),
           ),
         ],
       ),
